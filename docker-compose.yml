@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  devteam-postgres:
+    container_name: devteam-pg-db
+    image: postgres
+    ports:
+      - ${DB_PORT?}:${DB_PORT?}
+    volumes:
+      - "pg-data:/var/lib/postgresql/data"
+    environment:
+      PGPASSWORD: ${DB_PASS?}
+      POSTGRES_USER: ${DB_USER?}
+      POSTGRES_PASSWORD: ${DB_PASS?}
+      POSTGRES_DB: ${DB_NAME?}
+      PGPORT: ${DB_PORT?}
+volumes:
+  pg-data:
+    driver: local
