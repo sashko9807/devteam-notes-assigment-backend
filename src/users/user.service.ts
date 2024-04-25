@@ -1,6 +1,5 @@
 import prisma from "../db/prisma";
 import bcrypt from "bcrypt";
-import env from "../../config";
 
 export async function findUserByEmail(email: string) {
   return await prisma.user.findUnique({ where: { email } });

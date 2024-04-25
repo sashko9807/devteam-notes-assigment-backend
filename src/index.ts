@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import { userController } from "./users/user.controller";
 
-import env from "../config";
+import { env } from "../config";
 
 const app: Express = express();
 const port = env.PORT || 3000;

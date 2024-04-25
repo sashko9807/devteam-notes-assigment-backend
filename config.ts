@@ -7,8 +7,11 @@ dotenv.config({
   path: envFilePath,
 });
 
-export default {
+export const env = {
   NODE_ENV: process.env.NODE_ENV,
   PORT: process.env.PORT,
-  HASH_SECRET: process.env.HASH_SECRET,
+  ACCESS_TOKEN_SECRET: process.env.ACCESS_TOKEN_SECRET,
+  REFRESH_TOKEN_SECRET: process.env.REFRESH_TOKEN_SECRET,
+  ACCESS_TOKEN_EXPIRATION: process.env.ACCESS_TOKEN_EXPIRATION,
+  REFRESH_TOKEN_EXPIRATION: process.env.REFRESH_TOKEN_EXPIRATION,
 };

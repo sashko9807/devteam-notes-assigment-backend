@@ -1,7 +1,8 @@
 import express from "express";
-import { createUserHandler } from "./handlers";
+import { createUserHandler, loginHandler } from "./handlers";
 
 const router = express.Router();
-router.post("/register", createUserHandler);
+router.post("/user/register", createUserHandler);
+router.post("/user/login", loginHandler);
 
 export const userController = router;
