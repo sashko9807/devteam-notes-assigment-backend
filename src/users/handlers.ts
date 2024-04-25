@@ -1,9 +1,5 @@
 import { Request, Response } from "express";
-import {
-  findUserByEmail,
-  createNewUser,
-  updateUserPassword,
-} from "./user.service";
+import { userService } from "./user.service";
 import {
   CreateUserHandleReq,
   createUserSchema,
@@ -24,14 +20,14 @@ export async function createUserHandler(
 
   const { email, password } = value;
 
-  const user = await findUserByEmail(email);
+  const user = await userService.findUserByEmail(email);
   if (user) {
     res
       .sendStatus(409)
       .send({ message: "User with such email already exists" });
     return;
   }
-  const createdUser = await createNewUser(email, password);
+  const createdUser = await userService.createNewUser(email, password);
   if (!createdUser)
     res.sendStatus(500).send({ message: "User couldn't be created" });
 
@@ -45,7 +41,7 @@ export async function loginHandler(req: Request, res: Response) {
     res.sendStatus(400).send(error.details);
     return;
   }
-  const user = await findUserByEmail(email);
+  const user = await userService.findUserByEmail(email);
   if (!user) {
     res.sendStatus(404).send({ message: "No user found with such email" });
     return;
@@ -68,7 +64,7 @@ export async function changePasswordHandler(req: Request, res: Response) {
   }
 
   const { email, password, currentPassword } = value;
-  const user = await findUserByEmail(email);
+  const user = await userService.findUserByEmail(email);
   if (!user)
     return res.status(404).send({ message: "No user found with such email" });
 
@@ -78,6 +74,6 @@ export async function changePasswordHandler(req: Request, res: Response) {
       message: "Passwords don't match",
     });
   }
-  await updateUserPassword(email, password);
+  await userService.updateUserPassword(email, password);
   return res.status(200).send({ message: "Password updated successfully" });
 }

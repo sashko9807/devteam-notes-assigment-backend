@@ -1,11 +1,11 @@
 import prisma from "../db/prisma";
 import bcrypt from "bcrypt";
 
-export async function findUserByEmail(email: string) {
+async function findUserByEmail(email: string) {
   return await prisma.user.findUnique({ where: { email } });
 }
 
-export async function createNewUser(email: string, password: string) {
+async function createNewUser(email: string, password: string) {
   const saltRounds = 10;
   const passwordHashed = await bcrypt.hash(password, saltRounds);
   const user = await prisma.user.create({
@@ -17,10 +17,7 @@ export async function createNewUser(email: string, password: string) {
   return user;
 }
 
-export async function updateUserPassword(
-  email: string,
-  updatedPassword: string
-) {
+async function updateUserPassword(email: string, updatedPassword: string) {
   try {
     const hashedPassword = await bcrypt.hash(updatedPassword, 10);
     const user = await prisma.user.update({
@@ -32,3 +29,9 @@ export async function updateUserPassword(
     return null;
   }
 }
+
+export const userService = {
+  createNewUser,
+  updateUserPassword,
+  findUserByEmail,
+};
