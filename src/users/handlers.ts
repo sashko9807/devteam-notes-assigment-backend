@@ -1,6 +1,14 @@
 import { Request, Response } from "express";
-import { findUserByEmail, createNewUser } from "./user.service";
-import { CreateUserHandleReq, createUserSchema } from "./schemas";
+import {
+  findUserByEmail,
+  createNewUser,
+  updateUserPassword,
+} from "./user.service";
+import {
+  CreateUserHandleReq,
+  createUserSchema,
+  updateUserPasswordSchema,
+} from "./schemas";
 import bcrypt from "bcrypt";
 import { JWTSignToken } from "../utils/JWTSignToken";
 
@@ -27,7 +35,7 @@ export async function createUserHandler(
   if (!createdUser)
     res.sendStatus(500).send({ message: "User couldn't be created" });
 
-  res.send(201);
+  res.sendStatus(201);
 }
 
 export async function loginHandler(req: Request, res: Response) {
@@ -47,8 +55,29 @@ export async function loginHandler(req: Request, res: Response) {
     return res.sendStatus(401).send({ message: "Passwords don't match" });
   }
   const [accessToken, refreshToken] = JWTSignToken(user.id, user.email);
-  return res.sendStatus(201).send({
+  return res.json({
     accessToken,
     refreshToken,
   });
+}
+
+export async function changePasswordHandler(req: Request, res: Response) {
+  const { value, error } = updateUserPasswordSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json(error.details);
+  }
+
+  const { email, password, currentPassword } = value;
+  const user = await findUserByEmail(email);
+  if (!user)
+    return res.status(404).send({ message: "No user found with such email" });
+
+  const passwordMatch = await bcrypt.compare(currentPassword, user.password);
+  if (!passwordMatch) {
+    return res.status(401).json({
+      message: "Passwords don't match",
+    });
+  }
+  await updateUserPassword(email, password);
+  return res.status(200).send({ message: "Password updated successfully" });
 }

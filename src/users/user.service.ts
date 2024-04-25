@@ -16,3 +16,19 @@ export async function createNewUser(email: string, password: string) {
   });
   return user;
 }
+
+export async function updateUserPassword(
+  email: string,
+  updatedPassword: string
+) {
+  try {
+    const hashedPassword = await bcrypt.hash(updatedPassword, 10);
+    const user = await prisma.user.update({
+      where: { email },
+      data: { password: hashedPassword },
+    });
+    return user;
+  } catch (err) {
+    return null;
+  }
+}
