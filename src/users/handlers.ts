@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { userService } from "./user.service";
 import {
   CreateUserHandleReq,
+  UpdateUserPasswordReq,
   createUserSchema,
   updateUserPasswordSchema,
 } from "./schemas";
@@ -34,7 +35,10 @@ export async function createUserHandler(
   res.sendStatus(201);
 }
 
-export async function loginHandler(req: Request, res: Response) {
+export async function loginHandler(
+  req: Request<{}, {}, CreateUserHandleReq>,
+  res: Response
+) {
   const { value, error } = createUserSchema.validate(req.body);
   const { email, password } = value;
   if (error) {
@@ -57,7 +61,10 @@ export async function loginHandler(req: Request, res: Response) {
   });
 }
 
-export async function changePasswordHandler(req: Request, res: Response) {
+export async function changePasswordHandler(
+  req: Request<{}, {}, UpdateUserPasswordReq>,
+  res: Response
+) {
   const { value, error } = updateUserPasswordSchema.validate(req.body);
   if (error) {
     return res.status(400).json(error.details);

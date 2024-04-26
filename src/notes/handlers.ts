@@ -15,7 +15,10 @@ export async function getUserNotesHandler(
   res.status(200).json(notes);
 }
 
-export async function createNoteHandler(req: Request, res: Response) {
+export async function createNoteHandler(
+  req: Request<{}, {}, CreateNoteSchema>,
+  res: Response
+) {
   const { value: data, error } = createNoteSchema.validate(req.body);
   if (error) {
     res.sendStatus(400).send(error.details);
@@ -26,7 +29,7 @@ export async function createNoteHandler(req: Request, res: Response) {
 }
 
 export async function updateNoteHandler(
-  req: Request<{ id: string }, CreateNoteSchema>,
+  req: Request<{ id: string }, {}, CreateNoteSchema>,
   res: Response
 ) {
   const noteId = req.params.id;
