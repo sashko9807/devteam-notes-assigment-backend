@@ -8,5 +8,5 @@
     "skipLibCheck": true,
     "outDir": "./.build/dist"
   },
-  "include": ["config.ts", "src/**/*.ts", "src/*.ts"]
+  "include": ["src/config/config.ts", "src/**/*.ts", "src/*.ts"]
 }

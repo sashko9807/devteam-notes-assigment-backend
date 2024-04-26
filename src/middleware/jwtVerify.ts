@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 
 import * as jwt from "jsonwebtoken";
-import { env } from "../../config";
+import { env } from "../config/config";
 
 export type DecodedPayload = {
   userId: string;

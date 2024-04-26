@@ -1,5 +1,5 @@
 import * as jwt from "jsonwebtoken";
-import { env } from "../../config";
+import { env } from "../config/config";
 
 export function JWTSignToken(userID: string, email: string) {
   const accessToken = jwt.sign(

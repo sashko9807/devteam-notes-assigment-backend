@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from "express";
 import { userController } from "./users/user.controller";
 
-import { env } from "../config";
+import { env } from "./config/config";
 import { noteController } from "./notes/notes.controller";
 
 const app: Express = express();
