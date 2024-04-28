@@ -9,7 +9,7 @@ async function create(data: CreateNoteSchema) {
   return await prisma.note.create({
     data: {
       userId: data.userId,
-      description: data.content,
+      content: data.content,
       title: data.title,
     },
   });
@@ -20,7 +20,7 @@ async function update(noteId: string, data: CreateNoteSchema) {
     where: { id: noteId },
     data: {
       userId: data.userId,
-      description: data.content,
+      content: data.content,
       title: data.title,
     },
   });
