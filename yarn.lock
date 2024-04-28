@@ -5,6 +5,13 @@ __metadata:
   version: 6
   cacheKey: 8
 
+"@faker-js/faker@npm:^8.4.1":
+  version: 8.4.1
+  resolution: "@faker-js/faker@npm:8.4.1"
+  checksum: d802d531f8929562715adc279cfec763c9a4bc596ec67b0ce43fd0ae61b285d2b0eec6f1f4aa852452a63721a842fe7e81926dce7bd92acca94b01e2a1f55f5a
+  languageName: node
+  linkType: hard
+
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -704,6 +711,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "devteam-notes-assigment-backend@workspace:."
   dependencies:
+    "@faker-js/faker": ^8.4.1
     "@prisma/client": ^5.13.0
     "@types/bcrypt": ^5.0.2
     "@types/express": ^4.17.21
@@ -713,6 +721,7 @@ __metadata:
     bcrypt: ^5.1.1
     dotenv: ^16.4.5
     express: ^4.19.2
+    fishery: ^2.2.2
     joi: ^17.13.0
     jsonwebtoken: ^9.0.2
     nodemon: ^3.1.0
@@ -892,6 +901,15 @@ __metadata:
     statuses: "npm:2.0.1"
     unpipe: "npm:~1.0.0"
   checksum: 92effbfd32e22a7dff2994acedbd9bcc3aa646a3e919ea6a53238090e87097f8ef07cced90aa2cc421abdf993aefbdd5b00104d55c7c5479a8d00ed105b45716
+  languageName: node
+  linkType: hard
+
+"fishery@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "fishery@npm:2.2.2"
+  dependencies:
+    lodash.mergewith: ^4.6.2
+  checksum: 270a90bb69c16b73e4dc3df20e0c9d7f54feed3658114c0fcdeda726634b624b89cfa39d3858170db85d9f5ef6fe130ffb16b0056e3dbe6a1473629e754f14cb
   languageName: node
   linkType: hard
 
@@ -1394,6 +1412,13 @@ __metadata:
   version: 4.0.1
   resolution: "lodash.isstring@npm:4.0.1"
   checksum: eaac87ae9636848af08021083d796e2eea3d02e80082ab8a9955309569cb3a463ce97fd281d7dc119e402b2e7d8c54a23914b15d2fc7fff56461511dc8937ba0
+  languageName: node
+  linkType: hard
+
+"lodash.mergewith@npm:^4.6.2":
+  version: 4.6.2
+  resolution: "lodash.mergewith@npm:4.6.2"
+  checksum: a6db2a9339752411f21b956908c404ec1e088e783a65c8b29e30ae5b3b6384f82517662d6f425cc97c2070b546cc2c7daaa8d33f78db7b6e9be06cd834abdeb8
   languageName: node
   linkType: hard
 
