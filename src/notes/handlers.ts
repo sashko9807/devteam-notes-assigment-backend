@@ -41,3 +41,14 @@ export async function updateNoteHandler(
   const note = await noteService.update(noteId, data);
   res.status(200).json(note);
 }
+
+export async function deleteNoteHandler(
+  req: Request<{ id: string }, {}, { userId: string; email: string }>,
+  res: Response
+) {
+  const noteId = req.params.id;
+  const userId = req.body.userId;
+
+  const note = await noteService.deleteNote(noteId, userId);
+  res.status(200).json(note);
+}

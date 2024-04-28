@@ -26,4 +26,8 @@ async function update(noteId: string, data: CreateNoteSchema) {
   });
 }
 
-export const noteService = { findByUserId, create, update };
+async function deleteNote(noteId: string, userId: string) {
+  return await prisma.note.delete({ where: { id: noteId, userId } });
+}
+
+export const noteService = { findByUserId, create, update, deleteNote };
