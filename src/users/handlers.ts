@@ -29,8 +29,10 @@ export async function createUserHandler(
     return;
   }
   const createdUser = await userService.createNewUser(email, password);
-  if (!createdUser)
+  if (!createdUser) {
     res.sendStatus(500).send({ message: "User couldn't be created" });
+    return;
+  }
 
   res.sendStatus(201);
 }
@@ -40,24 +42,33 @@ export async function loginHandler(
   res: Response
 ) {
   const { value, error } = createUserSchema.validate(req.body);
+  console.log(value);
   const { email, password } = value;
   if (error) {
     res.sendStatus(400).send(error.details);
     return;
   }
   const user = await userService.findUserByEmail(email);
+
   if (!user) {
     res.sendStatus(404).send({ message: "No user found with such email" });
     return;
   }
   const passwordMatch = await bcrypt.compare(password, user.password);
   if (!passwordMatch) {
-    return res.sendStatus(401).send({ message: "Passwords don't match" });
+    res.sendStatus(401).send({ message: "Passwords don't match" });
+    return;
   }
+
   const [accessToken, refreshToken] = JWTSignToken(user.id, user.email);
+  res.cookie("jwt", refreshToken, {
+    httpOnly: true,
+    sameSite: "none",
+    secure: true,
+  });
+
   return res.json({
     accessToken,
-    refreshToken,
   });
 }
 

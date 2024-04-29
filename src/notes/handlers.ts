@@ -50,5 +50,5 @@ export async function deleteNoteHandler(
   const userId = req.body.userId;
 
   const note = await noteService.deleteNote(noteId, userId);
-  res.status(200).json(note);
+  res.status(204);
 }

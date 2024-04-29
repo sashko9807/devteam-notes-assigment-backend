@@ -3,11 +3,14 @@ import { userController } from "./users/user.controller";
 
 import { env } from "./config/config";
 import { noteController } from "./notes/notes.controller";
+import cors from "cors";
+import { corsOptions } from "./config/cors";
 
 const app: Express = express();
 const port = env.PORT || 3000;
 
 app.use(express.json());
+app.use(cors(corsOptions));
 app.use("/api/v1/user", userController);
 app.use("/api/v1/notes", noteController);
 
