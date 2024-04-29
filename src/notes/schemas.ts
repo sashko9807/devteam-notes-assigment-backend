@@ -8,11 +8,13 @@ export type CreateNoteSchema = {
 
 export type UpdateNoteSchema = CreateNoteSchema;
 
-export const findNoteSchema = Joi.object().keys({
-  userId: Joi.string().required().messages({
-    "any.required": "UserId is required",
-  }),
-});
+export const findNoteSchema = Joi.object()
+  .options({ allowUnknown: true })
+  .keys({
+    userId: Joi.string().required().messages({
+      "any.required": "UserId is required",
+    }),
+  });
 
 export const createNoteSchema = Joi.object<CreateNoteSchema>()
   .options({ abortEarly: false, allowUnknown: true })

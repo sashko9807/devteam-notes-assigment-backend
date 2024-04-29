@@ -7,7 +7,9 @@ export async function getUserNotesHandler(
   res: Response
 ) {
   const { value, error } = findNoteSchema.validate(req.body);
+
   if (error) {
+    console.log(error);
     res.sendStatus(400).send(error.details);
     return;
   }
@@ -20,6 +22,7 @@ export async function createNoteHandler(
   res: Response
 ) {
   const { value: data, error } = createNoteSchema.validate(req.body);
+  console.log(`called`);
   if (error) {
     res.sendStatus(400).send(error.details);
     return;
@@ -50,5 +53,7 @@ export async function deleteNoteHandler(
   const userId = req.body.userId;
 
   const note = await noteService.deleteNote(noteId, userId);
-  res.status(204);
+  return res
+    .status(200)
+    .json({ message: `Note with ${note.id} deleted successfully` });
 }
