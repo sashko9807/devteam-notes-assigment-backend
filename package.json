@@ -3,7 +3,7 @@
   "packageManager": "yarn@4.1.1",
   "scripts": {
     "build": "tsc",
-    "start:development": "NODE_ENV=development && nodemon src/index.ts",
+    "start:dev": "NODE_ENV=development && nodemon src/index.ts",
     "start:staging": "yarn build && NODE_ENV=staging && node .build/dist/src/index.js",
     "start:production": "yarn build && NODE_ENV=production && node .build/dist/src/index.js",
     "seed": "ts-node ./prisma/seed/index.ts"
