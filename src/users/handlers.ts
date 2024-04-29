@@ -15,11 +15,13 @@ export async function createUserHandler(
 ) {
   const { value, error } = createUserSchema.validate(req.body);
   if (error) {
+    console.log(error);
     res.sendStatus(400).send(error.details);
     return;
   }
 
   const { email, password } = value;
+  console.log(email);
 
   const user = await userService.findUserByEmail(email);
   if (user) {

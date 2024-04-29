@@ -12,7 +12,7 @@ export type UpdateUserPasswordReq = {
 };
 
 export const createUserSchema = Joi.object<CreateUserHandleReq>()
-  .options({ abortEarly: false })
+  .options({ abortEarly: false, allowUnknown: true })
   .keys({
     email: Joi.string().email().required().messages({
       "string.email": "Must be valid email",
