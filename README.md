@@ -1,13 +1,13 @@
-# React + TypeScript + Vite
+# Devteam-BG Assigment
+
+## About
+
+RESTful service, to accomodate [Notes App](https://github.com/sashko9807/devteam-notes-assigment-frontend.git/)
 
 ## Perequisites
 
 - Node.JS
 - Docker
-
-## About
-
-RESTful service, to accomodate (Notes App)[https://github.com/sashko9807/devteam-notes-assigment-frontend]
 
 ## TODO
 
