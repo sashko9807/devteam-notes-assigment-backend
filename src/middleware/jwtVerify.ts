@@ -13,13 +13,21 @@ export const authMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  const authHeader = req.headers["authorization"];
-  if (!authHeader) return res.sendStatus(401);
-  const accessToken = authHeader.substring(7);
+  const authHeader =
+    req.headers.authorization || (req.headers.Authorization as string);
+  const accessToken = authHeader?.substring(7);
+  if (!authHeader || !accessToken) {
+    res.status(401).send({ code: "Invalid authorization header" });
+    return;
+  }
 
   jwt.verify(accessToken, env.ACCESS_TOKEN_SECRET as string, (err, payload) => {
+    if (err) {
+      console.log(`verify-token ${err.message}`);
+      res.status(403).send({ message: err.message });
+      return;
+    }
     const { userId, email } = payload as DecodedPayload;
-    if (err) return res.sendStatus(403).send({ message: err.message });
     req.body.userId = userId;
     req.body.email = email;
     next();
