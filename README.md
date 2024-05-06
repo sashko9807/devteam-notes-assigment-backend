@@ -19,6 +19,7 @@ RESTful service, to accomodate [Notes App](https://github.com/sashko9807/devteam
 
 1. Run `docker compose up`, to create a PostgreSQL instance
 2. Run `yarn install`
-3. Run `yarn prisma migrate dev`
-4. Run `yarn seed`
-5. Run `yarn dev`
+3. Run `cp .env.example .env.development`
+4. Run `yarn prisma migrate dev`
+5. Run `yarn seed`
+6. Run `yarn dev`
