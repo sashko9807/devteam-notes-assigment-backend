@@ -5,10 +5,11 @@ import { env } from "./config/config";
 import { noteController } from "./notes/notes.controller";
 import cors from "cors";
 import { corsOptions, credentials } from "./config/cors";
-
+import cookieParser from "cookie-parser";
 const app: Express = express();
 const port = env.PORT || 3000;
 
+app.use(cookieParser());
 app.use(express.json());
 app.use(credentials);
 app.use(cors(corsOptions));

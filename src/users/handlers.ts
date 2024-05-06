@@ -8,6 +8,9 @@ import {
 } from "./schemas";
 import bcrypt from "bcrypt";
 import { JWTSignToken } from "../utils/JWTSignToken";
+import * as jwt from "jsonwebtoken";
+import { env } from "../config/config";
+import { DecodedPayload } from "../middleware/jwtVerify";
 
 export async function createUserHandler(
   req: Request<{}, {}, CreateUserHandleReq>,
@@ -63,8 +66,8 @@ export async function loginHandler(
   const [accessToken, refreshToken] = JWTSignToken(user.id, user.email);
   res.cookie("jwt", refreshToken, {
     httpOnly: true,
-    sameSite: "none",
-    secure: true,
+    sameSite: "lax",
+    secure: false,
   });
 
   return res.json({
@@ -94,4 +97,28 @@ export async function changePasswordHandler(
   }
   await userService.updateUserPassword(email, password);
   return res.status(200).send({ message: "Password updated successfully" });
+}
+
+export function refreshTokenHandler(req: Request, res: Response) {
+  const cookies = req.cookies;
+
+  if (!cookies?.jwt) {
+    console.log(`not a cookie`);
+    res.status(401).send("Invald cookie");
+    return;
+  }
+  const refreshToken = cookies.jwt;
+
+  jwt.verify(refreshToken, env.REFRESH_TOKEN_SECRET, {}, (err, payload) => {
+    if (err) {
+      console.log(`refreshToken ${err.message}`);
+      res.status(403).send({ message: err.message });
+      return;
+    }
+    const { userId, email } = payload as DecodedPayload;
+    const accessToken = jwt.sign({ userId, email }, env.ACCESS_TOKEN_SECRET, {
+      expiresIn: env.ACCESS_TOKEN_EXPIRATION,
+    });
+    res.json({ accessToken });
+  });
 }
